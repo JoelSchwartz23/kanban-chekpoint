@@ -14,7 +14,7 @@ router.get('/:boardId', (req, res, next) => {
 })
 
 //post a new list
-router.post('/:boardId', (req, res, next) => {
+router.post('/', (req, res, next) => {
   req.body.author = req.session.uid
   Lists.create(req.body)
     .then(newList => {
@@ -28,7 +28,7 @@ router.post('/:boardId', (req, res, next) => {
 
 //delete a list
 router.delete('/:id', (req, res, next) => {
-  Lists.findByIdAndDelete(req.params.id)
+  Lists.findById(req.params.id)
     .then(list => {
       if (!list.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")

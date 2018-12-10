@@ -15,11 +15,11 @@ router.get("/:taskId", (req, res, next) => {
 })
 
 //create a new comment
-router.post('/:boardId', (req, res, next) => {
+router.post('/', (req, res, next) => {
   req.body.author = req.session.uid
   Comments.create(req.body)
-    .then(newList => {
-      res.send(newList)
+    .then(newComment => {
+      res.send(newComment)
     })
     .catch(err => {
       console.error(err)
@@ -50,7 +50,7 @@ router.put('/:id', (req, res, next) => {
 })
 //delete comment if user is author
 router.delete('/:id', (req, res, next) => {
-  Comments.findByIdAndDelete(req.params.id)
+  Comments.findById(req.params.id)
     .then(comment => {
       if (!comment.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")
