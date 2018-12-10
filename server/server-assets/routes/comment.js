@@ -1,39 +1,40 @@
 let router = require('express').Router()
-let Boards = require('../models/board')
+let Comments = require('../models/comment')
 
-//GET
-router.get('/', (req, res, next) => {
-  Boards.find({ authorId: req.session.uid })
+
+//get all comments for one task
+router.get("/:taskId", (req, res, next) => {
+  Comments.find({ task: req.params.taskId })
     .then(data => {
       res.send(data)
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
       next()
     })
 })
 
-//POST
-router.post('/', (req, res, next) => {
+//create a new comment
+router.post('/:boardId', (req, res, next) => {
   req.body.author = req.session.uid
-  Boards.create(req.body)
-    .then(newBoard => {
-      res.send(newBoard)
+  Comments.create(req.body)
+    .then(newList => {
+      res.send(newList)
     })
     .catch(err => {
-      console.log(err)
+      console.error(err)
       next()
     })
 })
 
-//PUT
+//update comment if user is author
 router.put('/:id', (req, res, next) => {
-  Boards.findById(req.params.id)
-    .then(board => {
-      if (!board.author.equals(req.session.uid)) {
+  Comments.findById(req.params.id)
+    .then(comment => {
+      if (!comment.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")
       }
-      board.update(req.body, (err) => {
+      comment.update(req.body, (err) => {
         if (err) {
           console.log(err)
           next()
@@ -47,15 +48,14 @@ router.put('/:id', (req, res, next) => {
       next()
     })
 })
-
-//DELETE
+//delete comment if user is author
 router.delete('/:id', (req, res, next) => {
-  Boards.findById(req.params.id)
-    .then(board => {
-      if (!board.author.equals(req.session.uid)) {
+  Comments.findByIdAndDelete(req.params.id)
+    .then(comment => {
+      if (!comment.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")
       }
-      board.remove(err => {
+      comment.remove(err => {
         if (err) {
           console.log(err)
           next()
@@ -65,6 +65,4 @@ router.delete('/:id', (req, res, next) => {
       });
     })
 })
-
-
 module.exports = router
