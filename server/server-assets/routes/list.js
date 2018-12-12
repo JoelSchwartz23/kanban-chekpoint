@@ -1,20 +1,12 @@
 let router = require('express').Router()
 let Lists = require('../models/list')
+let Tasks = require('../models/task')
 
-//get all lists in a board
-router.get('/:boardId', (req, res, next) => {
-  Lists.find({ board: req.params.boardId })
-    .then(data => {
-      res.send(data)
-    })
-    .catch(err => {
-      console.log(err)
-      next()
-    })
-})
+
 
 //post a new list
 router.post('/', (req, res, next) => {
+  debugger
   req.body.author = req.session.uid
   Lists.create(req.body)
     .then(newList => {
@@ -41,6 +33,18 @@ router.delete('/:id', (req, res, next) => {
         }
         res.send("Successfully Deleted")
       });
+    })
+})
+
+//get all tasks in a list
+router.get('/:listId/tasks', (req, res, next) => {
+  Tasks.find({ list: req.params.listId })
+    .then(data => {
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(err)
+      next()
     })
 })
 

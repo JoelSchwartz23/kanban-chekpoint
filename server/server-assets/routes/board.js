@@ -1,9 +1,22 @@
 let router = require('express').Router()
 let Boards = require('../models/board')
+let Lists = require('../models/list')
 
 //GET
 router.get('/', (req, res, next) => {
-  Boards.find({ authorId: req.session.uid })
+  Boards.find({ author: req.session.uid })
+    .then(data => {
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(err)
+      next()
+    })
+})
+
+//Get one board
+router.get('/:boardId', (req, res, next) => {
+  Boards.find({ _id: req.params.boardId })
     .then(data => {
       res.send(data)
     })
@@ -63,6 +76,18 @@ router.delete('/:id', (req, res, next) => {
         }
         res.send("Successfully Deleted")
       });
+    })
+})
+
+//get all lists in a board
+router.get('/:boardId/lists', (req, res, next) => {
+  Lists.find({ board: req.params.boardId })
+    .then(data => {
+      res.send(data)
+    })
+    .catch(err => {
+      console.log(err)
+      next()
     })
 })
 

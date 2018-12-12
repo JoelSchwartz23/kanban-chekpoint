@@ -21,7 +21,10 @@ export default new Vuex.Store({
   state: {
     user: {},
     boards: [],
-    activeBoard: {}
+    activeBoard: {},
+    lists: [],
+    tasks: {},
+    comments: {}
   },
   mutations: {
     setUser(state, user) {
@@ -29,6 +32,17 @@ export default new Vuex.Store({
     },
     setBoards(state, boards) {
       state.boards = boards
+    },
+    setLists(state, lists) {
+      state.lists = lists
+    },
+    setActiveBoard(state, activeBoard) {
+      state.activeBoard = activeBoard
+    },
+    setTasks(state, tasks) {
+      if (tasks.length) {
+        state.tasks[tasks[0].list] = tasks
+      }
     }
   },
   actions: {
@@ -44,7 +58,11 @@ export default new Vuex.Store({
       auth.get('authenticate')
         .then(res => {
           commit('setUser', res.data)
-          router.push({ name: 'boards' })
+          // router.push({ name: 'boards' })
+        })
+        .catch(err => {
+          console.error(err)
+          router.push({ name: 'login' })
         })
     },
     login({ commit, dispatch }, creds) {
@@ -62,6 +80,12 @@ export default new Vuex.Store({
           commit('setBoards', res.data)
         })
     },
+    getBoard({ commit }, boardId) {
+      api.get('boards/' + boardId)
+        .then(res => {
+          commit('setActiveBoard', res.data[0])
+        })
+    },
     addBoard({ commit, dispatch }, boardData) {
       api.post('boards', boardData)
         .then(serverBoard => {
@@ -72,6 +96,51 @@ export default new Vuex.Store({
       api.delete('boards/' + boardId)
         .then(res => {
           dispatch('getBoards')
+        })
+    },
+    //Lists
+    getLists({ commit }, boardId) {
+      api.get('boards/' + boardId + '/lists')
+        .then(res => {
+          commit('setLists', res.data)
+        })
+    },
+    addList({ commit, dispatch }, listData) {
+      api.post('lists', listData)
+        .then(serverList => {
+          dispatch('getLists', listData.board)
+        })
+    },
+    deleteList({ commit, dispatch }, payload) {
+      api.delete('lists/' + payload.listId)
+        .then(res => {
+          dispatch('getLists', payload.boardId)
+        })
+    },
+    //Tasks
+    getTasks({ commit }, listId) {
+      api.get('lists/' + listId + '/tasks')
+        .then(res => {
+          commit('setTasks', res.data)
+        })
+    },
+    addTask({ commit, dispatch }, taskData) {
+      api.post('tasks', taskData)
+        .then(res => {
+          dispatch('getTasks', taskData.list)
+        })
+    },
+    deleteTask({ commit, dispatch }, payload) {
+      debugger
+      api.delete('tasks/' + payload.taskId)
+        .then(res => {
+          dispatch('getTasks', payload.listId)
+        })
+    },
+    editTask({ commit, dispatch }, payload) {
+      api.put('tasks/' + payload.taskId, payload)
+        .then(res => {
+          dispatch('getTasks', payload.listId)
         })
     }
 

@@ -1,17 +1,27 @@
 let router = require('express').Router()
 let Tasks = require('../models/task')
 
-//get all tasks in a list
-router.get('/:taskId', (req, res, next) => {
-  Tasks.find({ List: req.params.listId })
-    .then(data => {
-      res.send(data)
+//Edit a task
+router.put('/:id', (req, res, next) => {
+  Tasks.findById(req.params.id)
+    .then(task => {
+      if (!task.author.equals(req.session.uid)) {
+        return res.status(401).send("ACCESS DENIED!")
+      }
+      task.update(req.body, (err) => {
+        if (err) {
+          res.status(400).send(err)
+        }
+        res.send({ message: "successfully updated" })
+      })
     })
     .catch(err => {
-      console.log(err)
-      next()
+      console.error(err)
     })
 })
+
+
+
 //create a new task
 router.post('/', (req, res, next) => {
   req.body.author = req.session.uid
@@ -26,8 +36,8 @@ router.post('/', (req, res, next) => {
 })
 
 //delete a task
-router.delete('/:id', (req, res, next) => {
-  Tasks.findById(req.params.id)
+router.delete('/:taskId', (req, res, next) => {
+  Tasks.findById(req.params.taskId)
     .then(task => {
       if (!task.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")
