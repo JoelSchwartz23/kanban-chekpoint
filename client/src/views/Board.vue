@@ -15,6 +15,7 @@
 <script>
   import List from "@/components/List.vue"
 
+
   export default {
     name: "board",
     components: {
@@ -40,7 +41,7 @@
       },
       lists() {
         return this.$store.state.lists
-      }
+      },
     },
     methods: {
       addList() {

@@ -17,6 +17,8 @@ schema.pre('remove', function (next) {
     Tasks.deleteMany({ list: this._id }),
     Comments.deleteMany({ list: this._id })
   ])
+    .then(() => next())
+    .catch(err => next(err))
 })
 
 module.exports = mongoose.model(schemaName, schema)

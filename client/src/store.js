@@ -39,9 +39,14 @@ export default new Vuex.Store({
     setActiveBoard(state, activeBoard) {
       state.activeBoard = activeBoard
     },
+    deleteTask(state, oldTask) {
+      state.tasks[oldTask.listId] = {}
+
+
+    },
     setTasks(state, tasks) {
       if (tasks.length) {
-        state.tasks[tasks[0].list] = tasks
+        Vue.set(state.tasks, tasks[0].list, tasks)
       }
     }
   },
@@ -131,7 +136,6 @@ export default new Vuex.Store({
         })
     },
     deleteTask({ commit, dispatch }, payload) {
-      debugger
       api.delete('tasks/' + payload.taskId)
         .then(res => {
           dispatch('getTasks', payload.listId)
@@ -140,7 +144,12 @@ export default new Vuex.Store({
     editTask({ commit, dispatch }, payload) {
       api.put('tasks/' + payload.taskId, payload)
         .then(res => {
-          dispatch('getTasks', payload.listId)
+          let oldTask = {
+            taskId: payload.taskId,
+            listId: payload.oldList
+          }
+          commit('deleteTask', oldTask)
+          dispatch('getTasks', payload.list)
         })
     }
 

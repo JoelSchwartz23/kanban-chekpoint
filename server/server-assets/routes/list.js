@@ -6,7 +6,6 @@ let Tasks = require('../models/task')
 
 //post a new list
 router.post('/', (req, res, next) => {
-  debugger
   req.body.author = req.session.uid
   Lists.create(req.body)
     .then(newList => {

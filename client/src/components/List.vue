@@ -2,15 +2,13 @@
   <div>
     <div class="col-2 card">
       <h1>{{listData.title}}</h1>
-      <form @submit.prevent="addTask()">
+      <form @submit.prevent.reset="addTask()">
         <input type="text" placeholder="title" v-model="newTask.title" required>
         <input type="text" placeholder="description" v-model="newTask.content" required>
         <button type="submit">Create Task</button>
       </form>
       <button @click="deleteList(listData._id, listData.board)">Delete List</button>
-    </div>
-    <div v-if="tasks[listData._id]">
-      <task v-for="task in tasks[listData._id]" :taskData="task"></task>
+      <task v-for="task in tasks" :taskData="task" :listId="listData._id"></task>
     </div>
   </div>
 </template>
@@ -27,6 +25,11 @@
     mounted() {
       this.$store.dispatch('getTasks', this.listData._id)
     },
+    computed: {
+      tasks() {
+        return this.$store.state.tasks[this.listData._id] || []
+      }
+    },
     methods: {
       deleteList(listId, board) {
         let payload = {
@@ -36,12 +39,8 @@
         this.$store.dispatch("deleteList", payload);
       },
       addTask() {
+        event.target.reset()
         this.$store.dispatch("addTask", this.newTask)
-      }
-    },
-    computed: {
-      tasks() {
-        return this.$store.state.tasks
       }
     },
     data() {
