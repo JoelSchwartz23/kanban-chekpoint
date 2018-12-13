@@ -1,5 +1,24 @@
 let router = require('express').Router()
 let Tasks = require('../models/task')
+let Comments = require('../models/comment')
+
+//get all comments for one task
+router.get("/:taskId/comments", (req, res, next) => {
+  Comments.find({ task: req.params.taskId })
+    .then(data => {
+      res.send(data)
+    })
+    .catch(err => {
+      console.error(err)
+      next()
+    })
+})
+
+
+
+
+
+
 
 //Edit a task
 router.put('/:id', (req, res, next) => {

@@ -15,24 +15,53 @@
         </div>
       </div>
     </div>
+    <div class="dropdown">
+      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+        aria-haspopup="true" aria-expanded="false">
+        Comments
+      </button>
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <comment v-for="comment in comments" :commentData="comment" :taskId="taskData._id"></comment>
+      </div>
+    </div>
+    <form @submit.prevent="addComment()">
+      <input type="text-field" placeholder="description" v-model="newComment.content" required>
+      <button type="submit">Create Comment</button>
+    </form>
   </div>
 </template>
 
 
 
 <script>
+  import Comment from "@/components/Comment.vue"
+
   export default {
     name: 'Task',
     props: ['taskData', 'listId'],
+    components: {
+      Comment
+    },
     mounted() {
-      if (this.$store.state.lists.length) {
-        return this.$store.state.lists
-      }
+      this.$store.dispatch('getComments', this.taskData._id)
     },
     computed: {
       lists() {
         return this.$store.state.lists
       },
+      comments() {
+        return this.$store.state.comments[this.taskData._id] || []
+      }
+    },
+    data() {
+      return {
+        newComment: {
+          content: '',
+          board: this.$route.params.boardId,
+          task: this.taskData._id
+        }
+      }
+
     },
     methods: {
       editTask(taskId, newListId) {
@@ -50,6 +79,15 @@
           listId: listId
         }
         this.$store.dispatch("deleteTask", payload);
+      },
+      addComment() {
+        this.$store.dispatch('addComment', this.newComment)
+        this.newComment = {
+          content: '',
+          board: this.$route.params.boardId,
+          task: this.taskData._id
+        }
+
       }
     }
 

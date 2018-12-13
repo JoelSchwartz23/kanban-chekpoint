@@ -7,7 +7,7 @@
         <input type="text" placeholder="description" v-model="newTask.content" required>
         <button type="submit">Create Task</button>
       </form>
-      <button @click="deleteList(listData._id, listData.board)">Delete List</button>
+      <i class="fa fa-trash-alt" @click="deleteList(listData._id, listData.board)"></i>
       <task v-for="task in tasks" :taskData="task" :listId="listData._id"></task>
     </div>
   </div>
@@ -39,8 +39,13 @@
         this.$store.dispatch("deleteList", payload);
       },
       addTask() {
-        event.target.reset()
         this.$store.dispatch("addTask", this.newTask)
+        this.newTask = {
+          title: '',
+          board: this.$route.params.boardId,
+          list: this.listData._id,
+          content: ''
+        }
       }
     },
     data() {

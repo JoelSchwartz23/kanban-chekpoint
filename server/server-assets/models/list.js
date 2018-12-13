@@ -15,7 +15,7 @@ schema.pre('remove', function (next) {
   //@ts-ignore
   Promise.all([
     Tasks.deleteMany({ list: this._id }),
-    Comments.deleteMany({ list: this._id })
+    Comments.deleteMany({ board: this.board })
   ])
     .then(() => next())
     .catch(err => next(err))

@@ -2,17 +2,7 @@ let router = require('express').Router()
 let Comments = require('../models/comment')
 
 
-//get all comments for one task
-router.get("/:taskId", (req, res, next) => {
-  Comments.find({ task: req.params.taskId })
-    .then(data => {
-      res.send(data)
-    })
-    .catch(err => {
-      console.error(err)
-      next()
-    })
-})
+
 
 //create a new comment
 router.post('/', (req, res, next) => {
@@ -49,8 +39,8 @@ router.put('/:id', (req, res, next) => {
     })
 })
 //delete comment if user is author
-router.delete('/:id', (req, res, next) => {
-  Comments.findById(req.params.id)
+router.delete('/:commentId', (req, res, next) => {
+  Comments.findById(req.params.commentId)
     .then(comment => {
       if (!comment.author.equals(req.session.uid)) {
         return res.status(401).send("ACCESS DENIED!")

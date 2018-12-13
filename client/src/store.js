@@ -40,13 +40,19 @@ export default new Vuex.Store({
       state.activeBoard = activeBoard
     },
     deleteTask(state, oldTask) {
-      state.tasks[oldTask.listId] = {}
-
-
+      let index = state.tasks[oldTask.listId].findIndex(task => {
+        return task._id == oldTask.taskId
+      })
+      state.tasks[oldTask.listId].splice(index, 1)
     },
     setTasks(state, tasks) {
       if (tasks.length) {
         Vue.set(state.tasks, tasks[0].list, tasks)
+      }
+    },
+    setComments(state, comments) {
+      if (comments.length) {
+        Vue.set(state.comments, comments[0].task, comments)
       }
     }
   },
@@ -151,7 +157,33 @@ export default new Vuex.Store({
           commit('deleteTask', oldTask)
           dispatch('getTasks', payload.list)
         })
+    },
+    //comments
+    getComments({ commit }, taskId) {
+      api.get('tasks/' + taskId + '/comments')
+        .then(res => {
+          commit('setComments', res.data)
+        })
+    },
+    addComment({ commit, dispatch }, commentData) {
+      api.post('comments', commentData)
+        .then(res => {
+          dispatch('getComments', commentData.task)
+        })
+    },
+    deleteComment({ commit, dispatch }, payload) {
+      api.delete('comments/' + payload.commentId)
+        .then(res => {
+          dispatch('getComments', payload.taskId)
+        })
+    },
+    editComment({ commit, dispatch }, payload) {
+      api.put('comments/' + payload.commentId, payload)
+        .then(res => {
+          dispatch('getComments', payload.task)
+        })
     }
+
 
   }
 })
