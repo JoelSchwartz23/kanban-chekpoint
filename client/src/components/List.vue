@@ -1,14 +1,30 @@
 <template>
   <div>
-    <div class="col-2 card">
-      <h1>{{listData.title}}</h1>
-      <form @submit.prevent.reset="addTask()">
-        <input type="text" placeholder="title" v-model="newTask.title" required>
-        <input type="text" placeholder="description" v-model="newTask.content" required>
-        <button type="submit">Create Task</button>
-      </form>
-      <i class="fa fa-trash-alt" @click="deleteList(listData._id, listData.board)"></i>
-      <task v-for="task in tasks" :taskData="task" :listId="listData._id"></task>
+    <div class="col-12">
+      <div class="col-12 card">
+        <div class="row">
+          <h1 class="col-10 title">{{listData.title}}</h1>
+          <i class="fa fa-trash-alt col-2" @click="deleteList(listData._id, listData.board)"></i>
+        </div>
+        <div class="btn-group dropright">
+          <button type="button" class="btn btn-secondary">
+            New Task
+          </button>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropright</span>
+          </button>
+          <div class="dropdown-menu">
+            <form @submit.prevent.reset="addTask()">
+              <input type="text" placeholder="title" v-model="newTask.title" required>
+              <input type="text" placeholder="description" v-model="newTask.content" required>
+              <button type="submit">Create Task</button>
+            </form>
+          </div>
+        </div>
+        <task v-for="task in tasks" :taskData="task" :listId="listData._id"></task>
+
+      </div>
     </div>
   </div>
 </template>
@@ -63,6 +79,6 @@
 
 <style scoped>
   .card {
-    background: grey;
+    background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua);
   }
 </style>

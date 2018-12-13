@@ -14,9 +14,32 @@
   }
 
   body {
-    background-image: linear-gradient(to right, black, purple);
+    background-image: linear-gradient(to right, teal, purple);
     height: 100%;
   }
+
+  .title {
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100;
+    font-style: italic;
+    letter-spacing: 10px;
+    color: whitesmoke;
+    text-shadow: black, 2.5px;
+  }
+
+  button {
+    cursor: pointer;
+    background-image: linear-Gradient(to right, purple, teal);
+    color: whitesmoke;
+    margin: 10px;
+    border: double;
+  }
+
+  input {
+    margin: 10px;
+    border: double;
+  }
+
 
   #nav {
     padding: 30px;

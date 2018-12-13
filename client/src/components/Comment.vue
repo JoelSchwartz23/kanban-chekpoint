@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <p>{{commentData.content}}</p>
-    <button type="button" @click="deleteComment(commentData._id, commentData.task)">Delete Comment</button>
-
+  <div class="card">
+    <div class="row">
+      <i class="fa fa-trash-alt col-2 offset-9" @click="deleteComment(commentData._id, commentData.task)"></i>
+    </div>
+    <p class="card-text">{{commentData.content}}</p>
   </div>
 
 </template>
@@ -15,7 +16,6 @@
     props: ['commentData'],
     methods: {
       deleteComment(commentId, taskId) {
-        debugger
         let payload = {
           taskId: taskId,
           commentId: commentId
@@ -26,6 +26,8 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  ca.card-text {
+    text-align: center;
+  }
 </style>

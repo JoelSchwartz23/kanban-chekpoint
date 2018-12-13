@@ -1,33 +1,51 @@
 <template>
   <div>
-    <h4>{{taskData.title}}</h4>
-    <p>{{taskData.content}}</p>
-    <button type="button" @click="deleteTask(taskData._id, taskData.list)">Delete Task</button>
-    <div v-if="lists.length > 1">
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-          aria-haspopup="true" aria-expanded="false">
-          Move Task
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <p v-for="list in lists" @click="editTask(taskData._id, list._id)">{{list.title}}</p>
-
+    <div class="card">
+      <div class="card-body">
+        <div class="row">
+          <h4 class="card-title col-10 title">{{taskData.title}}</h4>
+          <i class="fa fa-trash-alt col-2" @click="deleteTask(taskData._id, taskData.list)"></i>
         </div>
+        <p class="card-text">{{taskData.content}}</p>
+        <div v-if="lists.length > 1">
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+              aria-haspopup="true" aria-expanded="false">
+              Move Task
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <p v-for="list in lists" @click="editTask(taskData._id, list._id)">{{list.title}}</p>
+
+            </div>
+          </div>
+        </div>
+        <div class="btn-group dropright">
+          <button type="button" class="btn btn-secondary">
+            New Comment
+          </button>
+          <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            <span class="sr-only">Toggle Dropright</span>
+          </button>
+          <div class="dropdown-menu">
+            <form @submit.prevent="addComment()">
+              <input type="text-field" placeholder="New Comment" v-model="newComment.content" required>
+              <button type="submit">Create Comment</button>
+            </form>
+          </div>
+        </div>
+        <div class="dropdown">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+            aria-haspopup="true" aria-expanded="false">
+            Comments
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <comment v-for="comment in comments" :commentData="comment" :taskId="taskData._id"></comment>
+          </div>
+        </div>
+
       </div>
     </div>
-    <div class="dropdown">
-      <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown"
-        aria-haspopup="true" aria-expanded="false">
-        Comments
-      </button>
-      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-        <comment v-for="comment in comments" :commentData="comment" :taskId="taskData._id"></comment>
-      </div>
-    </div>
-    <form @submit.prevent="addComment()">
-      <input type="text-field" placeholder="description" v-model="newComment.content" required>
-      <button type="submit">Create Comment</button>
-    </form>
   </div>
 </template>
 
@@ -96,5 +114,13 @@
 </script>
 
 <style scoped>
+  .card {
+    background-image: radial-gradient(purple, teal);
+    margin: 10px;
+    color: whitesmoke;
+  }
 
+  .dropdown-menu {
+    background-image: linear-gradient(to bottom right, aqua, rgb(248, 83, 111))
+  }
 </style>

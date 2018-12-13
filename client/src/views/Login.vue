@@ -1,19 +1,26 @@
 <template>
   <div class="login">
-    <form v-if="loginForm" @submit.prevent="loginUser">
-      <input type="email" v-model="creds.email" placeholder="email">
-      <input type="password" v-model="creds.password" placeholder="password">
-      <button type="submit">Login</button>
-    </form>
-    <form v-else @submit.prevent="register">
-      <input type="text" v-model="newUser.name" placeholder="name">
-      <input type="email" v-model="newUser.email" placeholder="email">
-      <input type="password" v-model="newUser.password" placeholder="password">
-      <button type="submit">Create Account</button>
-    </form>
-    <div class="action" @click="loginForm = !loginForm">
-      <p v-if="loginForm">No account? Click here to Register</p>
-      <p v-else>Already have an account? Click here to Login</p>
+    <div class="row">
+      <form class="col-12" v-if="loginForm" @submit.prevent="loginUser">
+        <input type="email" v-model="creds.email" placeholder="email">
+        <input type="password" v-model="creds.password" placeholder="password">
+        <button type="submit">Login</button>
+      </form>
+      <form class="col-12" v-else @submit.prevent="register">
+        <input type="text" v-model="newUser.name" placeholder="name">
+        <input type="email" v-model="newUser.email" placeholder="email">
+        <input type="password" v-model="newUser.password" placeholder="password">
+        <button type="submit">Create Account</button>
+      </form>
+      <div class="action col-12" @click="loginForm = !loginForm">
+        <p v-if="loginForm">No account? Click here to Register</p>
+        <p v-else>Already have an account? Click here to Login</p>
+      </div>
+    </div>
+    <div class="buffer">
+      <h1 class="title">Welcome To Your Kanban Board!</h1>
+    </div>
+    <div class="flavor">
     </div>
   </div>
 </template>
@@ -49,5 +56,19 @@
 <style>
   .action {
     cursor: pointer;
+    color: whitesmoke;
+    font-family: 'Times New Roman', Times, serif;
+  }
+
+  .flavor {
+    background-image: url('C:/Users/neder/source/codeworks/kanban-chekpoint/client/assets/Photo2.jpg');
+    min-height: 79vh;
+    background-size: cover;
+    background-position: center;
+  }
+
+  .buffer {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
+    height: 10vh;
   }
 </style>
