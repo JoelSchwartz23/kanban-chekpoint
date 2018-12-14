@@ -16,9 +16,9 @@
         <p v-if="loginForm">No account? Click here to Register</p>
         <p v-else>Already have an account? Click here to Login</p>
       </div>
+      <h1 class="title col-12">Welcome To Your Kanban Board!</h1>
     </div>
     <div class="buffer">
-      <h1 class="title">Welcome To Your Kanban Board!</h1>
     </div>
     <div class="flavor">
     </div>
@@ -68,7 +68,7 @@
   }
 
   .buffer {
-    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), black);
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgb(0, 0, 0));
     height: 10vh;
   }
 </style>

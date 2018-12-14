@@ -115,12 +115,19 @@
 
 <style scoped>
   .card {
-    background-image: radial-gradient(purple, teal);
+    background-image: linear-gradient(to top left, aqua, rgb(248, 83, 111));
     margin: 10px;
     color: whitesmoke;
+    border: black, 5px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100;
+    color: whitesmoke;
+    text-shadow: 2px 2px #ff0000;
+    font-size: 1.25rem;
+    min-width: 18rem;
   }
 
   .dropdown-menu {
-    background-image: linear-gradient(to bottom right, aqua, rgb(248, 83, 111))
+    background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua)
   }
 </style>

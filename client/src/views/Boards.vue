@@ -68,6 +68,6 @@
   }
 
   .link:hover {
-    color: purple;
+    color: aqua;
   }
 </style>

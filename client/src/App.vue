@@ -14,7 +14,7 @@
   }
 
   body {
-    background-image: linear-gradient(to right, teal, purple);
+    background-image: linear-gradient(to right, rgb(248, 83, 111), aqua);
     height: 100%;
   }
 
@@ -24,12 +24,12 @@
     font-style: italic;
     letter-spacing: 10px;
     color: whitesmoke;
-    text-shadow: black, 2.5px;
+    text-shadow: 2px 2px #ff0000;
   }
 
   button {
     cursor: pointer;
-    background-image: linear-Gradient(to right, purple, teal);
+    background-image: linear-gradient(to right, rgb(248, 83, 111), rgb(236, 129, 147));
     color: whitesmoke;
     margin: 10px;
     border: double;
@@ -52,5 +52,9 @@
 
   #nav a.router-link-exact-active {
     color: #42b983;
+  }
+
+  i {
+    cursor: pointer;
   }
 </style>

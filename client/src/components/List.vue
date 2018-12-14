@@ -80,5 +80,12 @@
 <style scoped>
   .card {
     background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua);
+    color: whitesmoke;
+    border: black, 5px;
+    font-family: 'Times New Roman', Times, serif;
+    font-weight: 100;
+    color: whitesmoke;
+    text-shadow: 2px 2px #ff0000;
+    font-size: 1.25rem;
   }
 </style>

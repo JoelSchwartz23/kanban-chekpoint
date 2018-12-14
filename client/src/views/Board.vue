@@ -70,6 +70,6 @@
 
 <style scoped>
   .board {
-    color: whitesmokeS;
+    color: whitesmoke;
   }
 </style>
