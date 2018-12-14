@@ -88,4 +88,9 @@
     text-shadow: 2px 2px #ff0000;
     font-size: 1.25rem;
   }
+
+  .dropdown-menu {
+    background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua);
+    color: whitesmoke;
+  }
 </style>

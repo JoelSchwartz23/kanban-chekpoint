@@ -128,6 +128,7 @@
   }
 
   .dropdown-menu {
-    background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua)
+    background-image: linear-gradient(to bottom right, rgb(248, 83, 111), aqua);
+    color: whitesmoke;
   }
 </style>

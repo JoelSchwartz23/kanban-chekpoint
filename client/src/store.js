@@ -6,7 +6,7 @@ import router from './router'
 Vue.use(Vuex)
 
 let production = !window.location.host.includes('localhost')
-let baseUrl = production ? 'https://jake-joel-kanban.herokuapp.com/' : '//localhost:3000/'
+let baseUrl = production ? '//jake-joel-kanban.herokuapp.com/' : '//localhost:3000/'
 
 
 let auth = Axios.create({
@@ -49,15 +49,14 @@ export default new Vuex.Store({
       })
       state.tasks[oldTask.listId].splice(index, 1)
     },
-    setTasks(state, tasks) {
-      if (tasks.length) {
-        Vue.set(state.tasks, tasks[0].list, tasks)
-      }
+    setTasks(state, payload) {
+
+      Vue.set(state.tasks, payload.listId, payload.tasks)
+
     },
-    setComments(state, comments) {
-      if (comments.length) {
-        Vue.set(state.comments, comments[0].task, comments)
-      }
+    setComments(state, payload) {
+      Vue.set(state.comments, payload.taskId, payload.comments)
+
     }
   },
   actions: {
@@ -143,7 +142,7 @@ export default new Vuex.Store({
     getTasks({ commit }, listId) {
       api.get('lists/' + listId + '/tasks')
         .then(res => {
-          commit('setTasks', res.data)
+          commit('setTasks', { listId: listId, tasks: res.data })
         })
     },
     addTask({ commit, dispatch }, taskData) {
@@ -173,7 +172,7 @@ export default new Vuex.Store({
     getComments({ commit }, taskId) {
       api.get('tasks/' + taskId + '/comments')
         .then(res => {
-          commit('setComments', res.data)
+          commit('setComments', { taskId: taskId, comments: res.data })
         })
     },
     addComment({ commit, dispatch }, commentData) {
