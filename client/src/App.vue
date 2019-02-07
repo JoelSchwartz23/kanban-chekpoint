@@ -14,7 +14,7 @@
   }
 
   body {
-    background-image: linear-gradient(to right, rgb(248, 83, 111), aqua);
+    background-image: linear-gradient(to right, black, aqua);
     height: 100%;
   }
 
@@ -24,12 +24,12 @@
     font-style: italic;
     letter-spacing: 10px;
     color: whitesmoke;
-    text-shadow: 2px 2px #ff0000;
+    text-shadow: 2px 2px grey;
   }
 
   button {
     cursor: pointer;
-    background-image: linear-gradient(to right, rgb(248, 83, 111), rgb(236, 129, 147));
+    background-image: linear-gradient(to right, black, grey);
     color: whitesmoke;
     margin: 10px;
     border: double;
