@@ -1,14 +1,14 @@
 <template>
   <div class="board container-fluid">
     <div class="row">
-      <div class="col-3 offset-8">
+      <div class="col-3 offset-9">
         <button @click="returnToBoards()">Back To Boards</button>
         <button @click='logout()'>Logout</button>
       </div>
     </div>
     <div class="row">
-      <h1 class="col-12 title">{{board.title}}</h1>
-      <h3 class="col-12 title">{{board.description}}</h3>
+      <h1 class="col-12 title"><u>{{board.title}}</u></h1>
+      <h3 class="col-12 title"><u>{{board.description}}</u></h3>
       <form class="col-12" @submit.prevent="addList">
         <input type="text" placeholder="title" v-model="newList.title" required>
         <button type="submit">Create List</button>

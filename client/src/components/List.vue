@@ -77,7 +77,7 @@
   }
 </script>
 
-<style scoped>
+<style>
   .card {
     background-image: linear-gradient(to bottom right, black, aqua);
     color: whitesmoke;

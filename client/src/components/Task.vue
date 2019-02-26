@@ -113,7 +113,7 @@
 
 </script>
 
-<style scoped>
+<style>
   .card {
     background-image: linear-gradient(to top left, aqua, black);
     margin: 10px;
